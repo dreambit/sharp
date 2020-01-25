@@ -1,38 +1,10 @@
 'use strict';
 
 const path = require('path');
-const sharp = require('sharp');
-const maxColourDistance = require('sharp')._maxColourDistance;
 
 // Helpers
 const getPath = function (filename) {
   return path.join(__dirname, filename);
-};
-
-// Generates a 64-bit-as-binary-string image fingerprint
-// Based on the dHash gradient method - see http://www.hackerfactor.com/blog/index.php?/archives/529-Kind-of-Like-That.html
-const fingerprint = function (image, callback) {
-  sharp(image)
-    .flatten('gray')
-    .greyscale()
-    .normalise()
-    .resize(9, 8, { fit: sharp.fit.fill })
-    .raw()
-    .toBuffer(function (err, data) {
-      if (err) {
-        callback(err);
-      } else {
-        let fingerprint = '';
-        for (let col = 0; col < 8; col++) {
-          for (let row = 0; row < 8; row++) {
-            const left = data[(row * 8) + col];
-            const right = data[(row * 8) + col + 1];
-            fingerprint = fingerprint + (left < right ? '1' : '0');
-          }
-        }
-        callback(null, fingerprint);
-      }
-    });
 };
 
 module.exports = {
