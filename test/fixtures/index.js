@@ -128,42 +128,6 @@ module.exports = {
     if (typeof callback !== 'function') {
       throw new TypeError('`callback` must be a function');
     }
-
-    fingerprint(expectedImage, function (err, expectedFingerprint) {
-      if (err) return callback(err);
-      fingerprint(actualImage, function (err, actualFingerprint) {
-        if (err) return callback(err);
-        let distance = 0;
-        for (let i = 0; i < 64; i++) {
-          if (expectedFingerprint[i] !== actualFingerprint[i]) {
-            distance++;
-          }
-        }
-
-        if (distance > options.threshold) {
-          return callback(new Error('Expected maximum similarity distance: ' + options.threshold + '. Actual: ' + distance + '.'));
-        }
-
-        callback();
-      });
-    });
-  },
-
-  assertMaxColourDistance: function (actualImagePath, expectedImagePath, acceptedDistance) {
-    if (typeof actualImagePath !== 'string') {
-      throw new TypeError('`actualImagePath` must be a string; got ' + actualImagePath);
-    }
-    if (typeof expectedImagePath !== 'string') {
-      throw new TypeError('`expectedImagePath` must be a string; got ' + expectedImagePath);
-    }
-    if (typeof acceptedDistance !== 'number') {
-      // Default threshold
-      acceptedDistance = 1;
-    }
-    const distance = maxColourDistance(actualImagePath, expectedImagePath);
-    if (distance > acceptedDistance) {
-      throw new Error('Expected maximum absolute distance of ' + acceptedDistance + ', actual ' + distance);
-    }
   }
 
 };
