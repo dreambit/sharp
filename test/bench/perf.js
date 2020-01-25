@@ -11,8 +11,8 @@ const sharp = require('sharp');
 
 const fixtures = require('../fixtures');
 
-const width = 720;
-const height = 588;
+const width = 640;
+const height = 392;
 
 // Disable libvips cache to ensure tests are as fair as they can be
 sharp.cache(false);
