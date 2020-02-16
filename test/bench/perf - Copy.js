@@ -9,8 +9,6 @@ const Benchmark = require('benchmark');
 // Contenders
 const sharp = require('sharp');
 
-sharp.concurrency(8)
-
 const fixtures = require('../fixtures');
 
 const width = 640;
